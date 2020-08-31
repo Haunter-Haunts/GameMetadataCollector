@@ -83,39 +83,57 @@ namespace GameMetadataCollector
             b.AppendLine(string.Empty);
 
             // Create game description
-            b.AppendLine("[quote]");
-            b.AppendLine(StripHtml(game.DetailedDescription));
-            b.AppendLine("[/quote]");
-            b.AppendLine(string.Empty);
+            if (!string.IsNullOrEmpty(game.DetailedDescription))
+            {
+                b.AppendLine("[quote]");
+                b.AppendLine(StripHtml(game.DetailedDescription));
+                b.AppendLine("[/quote]");
+                b.AppendLine(string.Empty);
+            }
 
             // Controller support
-            b.Append("[i]Controller Support: ");
-            b.Append(textInfo.ToTitleCase(game.ControllerSupport));
-            b.AppendLine("[/i]");
+            if (!string.IsNullOrEmpty(game.ControllerSupport))
+            {
+                b.Append("[i]Controller Support: ");
+                b.Append(textInfo.ToTitleCase(game.ControllerSupport));
+                b.AppendLine("[/i]");
+            }
 
             // Metacritic
-            b.Append("[i]Metacritic Score: ");
-            b.Append("[url=");
-            b.Append(game.Metacritic.Url);
-            b.Append("]");
-            b.Append(game.Metacritic.Score);
-            b.Append("[/url]");
-            b.AppendLine("[/i]");
+            if (game.Metacritic != null)
+            {
+                b.Append("[i]Metacritic Score: ");
+                b.Append("[url=");
+                b.Append(game.Metacritic.Url);
+                b.Append("]");
+                b.Append(game.Metacritic.Score);
+                b.Append("[/url]");
+                b.AppendLine("[/i]");
+            }
 
             // Developers
-            b.Append("[i]Developers: ");
-            b.Append(string.Join(", ", game.Developers));
-            b.AppendLine("[/i]");
+            if (game.Developers != null && game.Developers.Length > 0)
+            {
+                b.Append("[i]Developers: ");
+                b.Append(string.Join(", ", game.Developers));
+                b.AppendLine("[/i]");
+            }
 
             // Publishers
-            b.Append("[i]Publishers: ");
-            b.Append(string.Join(", ", game.Publishers));
-            b.AppendLine("[/i]");
+            if (game.Publishers != null && game.Publishers.Length > 0)
+            {
+                b.Append("[i]Publishers: ");
+                b.Append(string.Join(", ", game.Publishers));
+                b.AppendLine("[/i]");
+            }
 
             // Genres
-            b.Append("[i]Genres: ");
-            b.Append(string.Join(", ", game.Genres.Select(x => x.Description).ToArray()));
-            b.AppendLine("[/i]");
+            if (game.Genres != null && game.Genres.Length > 0)
+            {
+                b.Append("[i]Genres: ");
+                b.Append(string.Join(", ", game.Genres.Select(x => x.Description).ToArray()));
+                b.AppendLine("[/i]");
+            }
 
             // Store page
             b.Append("[i]Store Page: ");
